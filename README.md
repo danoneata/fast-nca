@@ -4,10 +4,10 @@ Fast implementation of the [Neighborhood Component Analysis](https://papers.nips
 
 # TODO
 
-- [] Add requirements
-- [] Add examples
-- [] Add tests
-- [] Package the code
-- [] Compute timings
-- [] Write documentation
-- [] Implement version with mini-batches
+- [ ] Add requirements
+- [ ] Add examples
+- [ ] Add tests
+- [ ] Package the code
+- [ ] Compute timings
+- [ ] Write documentation
+- [ ] Implement version with mini-batches
