@@ -6,10 +6,19 @@ Fast implementation of the [Neighborhood Component Analysis](https://papers.nips
 
 sklearn-like API:
 
+Sample usage:
+
 ```python
 from nca import NCA
-nca_model = NCA()
-nca_model.fit(X, y)
+n = NCA()
+n.fit(X, y)
+X = n.transform(X)
+```
+
+Run the [example.py](example.py) file:
+
+```bash
+python example.py
 ```
 
 # Installation
@@ -42,10 +51,12 @@ Iain Murray for supervision and writing a first version of this code.
 # TODO
 
 - [x] Add requirements
-- [ ] Add examples
+- [x] Add examples
+- [x] Add example using NCA with Nearest Neighbour
 - [ ] Add example on MNIST
 - [ ] Add some visualizations
 - [ ] Add tests
+- [ ] Add gradient check tests
 - [ ] Package the code
 - [ ] Compute timings
 - [ ] Big O notation for memory and computation
@@ -54,3 +65,4 @@ Iain Murray for supervision and writing a first version of this code.
 - [ ] Provide links to other implementations and outline differences
 - [ ] Motivate metric learning
 - [ ] Test numerical stability
+- [ ] Implement [nearest mean metric learning](https://hal.inria.fr/hal-00817211/document)

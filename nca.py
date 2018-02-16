@@ -2,7 +2,10 @@ import pdb
 
 import numpy as np
 
-from scipy.optimize import fmin_cg
+from scipy.optimize import (
+    check_grad,
+    fmin_cg,
+)
 
 from sklearn.preprocessing import (
     StandardScaler,
@@ -31,10 +34,18 @@ def nca_cost(A, xx, yy, reg):
 
     # Cost function:
     zz = np.dot(A, xx.T)  # KxN
+
     # TODO Subsample part of data to compute loss on.
     # kk = np.exp(-square_dist(zz.T, zz.T[idxs]))  # Nxn
     # kk[idxs, np.arange(len(idxs))] = 0
+
+    # TODO Avoid over and underflows!
+    # ss = square_dist(zz.T)
+    # mm  = np.min(ss, axis=0)
+    # kk = np.exp(mm - square_dist(zz.T))  # NxN
+
     kk = np.exp(-square_dist(zz.T))  # NxN
+    kk[np.isnan(kk)] = 1e-10
     np.fill_diagonal(kk, 0)
     Z_p = np.sum(kk, 0)  # N,
     p_mn = kk / Z_p[np.newaxis, :]  # P(z_m | z_n), NxN
@@ -111,7 +122,7 @@ class NCA:
 
     """
 
-    def __init__(self, reg=0.5, dim=None, optimizer='cg'):
+    def __init__(self, reg=0, dim=None, optimizer='cg'):
         self.reg = reg
         self.K = dim
         self.standard_scaler = StandardScaler()
@@ -130,10 +141,7 @@ class NCA:
         if self.K is None:
             self.K = D
 
-        if self.K == D:
-            self.A = np.eye(D)
-        else:
-            self.A = 0.1 * np.random.randn(self.K, D)
+        self.A = 0.5 * np.random.randn(self.K, D)
 
         X = self.standard_scaler.fit_transform(X)
         return self._fit(X, y)
@@ -178,6 +186,10 @@ class NCA:
         # print(check_grad(costf, costg, 0.1 * np.random.randn(self.K * D)))
         self.A = fmin_cg(costf, self.A.ravel(), costg).reshape([self.K, D])
         return self
+
+    def fit_transform(self, X, y):
+        self.fit(X, y)
+        return self.transform(X)
 
     def transform(self, X):
         return np.dot(self.standard_scaler.transform(X), self.A.T)
