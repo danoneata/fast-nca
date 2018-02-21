@@ -17,6 +17,8 @@ from sklearn.datasets import (
     load_wine,
 )
 
+from sklearn.decomposition import PCA
+
 from sklearn.metrics import accuracy_score
 
 from sklearn.model_selection import (
@@ -51,6 +53,8 @@ MODELS = {
     'nca': NCA(dim=None),
     'nca-2d': NCA(dim=2),
     'euclidean': Euclidean(),
+    'pca': PCA(),
+    'pca-2d': PCA(n_components=2),
 }
 
 
