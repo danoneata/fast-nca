@@ -5,6 +5,10 @@ import numpy as np
 from scipy.optimize import (
     check_grad,
     fmin_cg,
+
+from sklearn.base import (
+    BaseEstimator,
+    TransformerMixin,
 )
 
 from sklearn.preprocessing import (
@@ -92,7 +96,7 @@ def nca_cost_batch(self, A, xx, yy, idxs):
     return ff, gg
 
 
-class NCA:
+class NCA(BaseEstimator, TransformerMixin):
     """Neighbourhood Components Analysis: cost function and gradients
 
         ff, gg = nca_cost(A, xx, yy)
