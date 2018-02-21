@@ -39,13 +39,11 @@ def nca_cost(A, xx, yy, reg):
     # kk = np.exp(-square_dist(zz.T, zz.T[idxs]))  # Nxn
     # kk[idxs, np.arange(len(idxs))] = 0
 
-    # TODO Avoid over and underflows!
-    # ss = square_dist(zz.T)
-    # mm  = np.min(ss, axis=0)
-    # kk = np.exp(mm - square_dist(zz.T))  # NxN
-
-    kk = np.exp(-square_dist(zz.T))  # NxN
-    kk[np.isnan(kk)] = 1e-10
+    ss = square_dist(zz.T)
+    np.fill_diagonal(ss, np.inf)
+    mm = np.min(ss, axis=0)
+    kk = np.exp(mm - ss)  # NxN
+    # kk = np.exp(-ss)  # NxN
     np.fill_diagonal(kk, 0)
     Z_p = np.sum(kk, 0)  # N,
     p_mn = kk / Z_p[np.newaxis, :]  # P(z_m | z_n), NxN
@@ -55,10 +53,10 @@ def nca_cost(A, xx, yy, reg):
 
     # Back-propagate derivatives:
     kk_bar = - (mask - p_n[np.newaxis, :]) / Z_p[np.newaxis, :]  # NxN
-    zz_bar_part = kk * (kk_bar + kk_bar.T)
-    zz_bar = 2 * (np.dot(zz, zz_bar_part) - (zz * sum(zz_bar_part, 0)))  # KxN
+    ee_bar = kk * kk_bar
+    zz_bar_part = ee_bar + ee_bar.T
+    zz_bar = 2 * (np.dot(zz, zz_bar_part) - (zz * np.sum(zz_bar_part, 0)))  # KxN
     gg = np.dot(zz_bar, xx)  # O(DKN)
-
 
     if reg > 0:
         ff = ff + reg * np.dot(A.ravel(), A.ravel())
