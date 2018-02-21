@@ -53,8 +53,11 @@ Iain Murray for supervision and writing a first version of this code.
 - [x] Add requirements
 - [x] Add examples
 - [x] Add example using NCA with Nearest Neighbour
+- [x] Test numerical stability
+- [x] Add argument parsing for example script
+- [x] Add some visualizations
+- [ ] Do not compute gradients when only the cost function is required
 - [ ] Add example on MNIST
-- [ ] Add some visualizations
 - [ ] Add tests
 - [ ] Add gradient check tests
 - [ ] Package the code
@@ -64,5 +67,4 @@ Iain Murray for supervision and writing a first version of this code.
 - [ ] Implement version with mini-batches
 - [ ] Provide links to other implementations and outline differences
 - [ ] Motivate metric learning
-- [ ] Test numerical stability
 - [ ] Implement [nearest mean metric learning](https://hal.inria.fr/hal-00817211/document)
