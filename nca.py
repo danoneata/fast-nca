@@ -131,6 +131,8 @@ class NCA:
             self._fit = self._fit_gradient_descent
         elif optimizer in ('mb', 'mini_batches'):
             self._fit = self._fit_mini_batches
+        else:
+            raise ValueError("Unknown optimizer {:s}".format(optimizer))
 
     def fit(self, X, y):
 
