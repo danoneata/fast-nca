@@ -95,13 +95,13 @@ def main():
     )
 
     args = parser.parse_args()
-    np.random.seed(SEED)
+    np.random.seed(args.seed)
     
     data = DATA_LOADERS[args.data]()
     X, y = data.data, data.target
 
     X_tr, X_te, y_tr, y_te = train_test_split(
-        X, y, test_size=TEST_SIZE, random_state=SEED)
+        X, y, test_size=TEST_SIZE, random_state=args.seed)
 
     # Apply metric model
     model = MODELS[args.model]
