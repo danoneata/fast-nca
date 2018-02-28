@@ -56,7 +56,7 @@ pip install -r requirements.txt
 
 # Acknowledgements
 
-Iain Murray for supervision and writing a first version of this code.
+Special thanks to [Iain Murray](http://homepages.inf.ed.ac.uk/imurray2/) for writing a first version of this code, teaching me about [automatic differentiation](http://www.inf.ed.ac.uk/teaching/courses/mlpr/2017/notes/w5a_backprop.html) and supervising my Master's thesis project.
 
 # TODO
 
