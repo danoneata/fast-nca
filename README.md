@@ -1,12 +1,18 @@
 # Fast NCA
 
 Fast implementation of the [Neighborhood Component Analysis](https://papers.nips.cc/paper/2566-neighbourhood-components-analysis.pdf) algorithm in Python.
+The ideas behind some of the choices are further expanded in Master's thesis, [Fast low-rank metric learning](http://homepages.inf.ed.ac.uk/imurray2/projects/2011_dan_oneata_msc.pdf).
+
+Features:
+
+- Sklearn-like API
+- Same gradient cost as the objective function
+- Avoid overflows when the scale of the metric is large
+- WIP Mini-batch version
 
 # Examples
 
-sklearn-like API:
-
-Sample usage:
+Sample usage from Python:
 
 ```python
 from nca import NCA
@@ -15,19 +21,23 @@ n.fit(X, y)
 X = n.transform(X)
 ```
 
-Run the [example.py](example.py) file:
+For an example, run the [example.py](example.py) script.
+Among others the script accepts the type of model and the dataset:
 
 ```bash
-python example.py
+python example.py --model nca --data wine
+```
+
+For a complete description of the available options, just invoke the help prompt:
+
+```bash
+python example.py -h
 ```
 
 # Installation
 
-- NumPy
-- SciPy
-- Scikit-learn
-
-If you want to use a virtual environment, just run the following commands:
+The code depends on the usual Python scientific environment: NumPy, SciPy, Scikit-learn.
+The required packages are listed in the `requirements.txt` file and can be installed in a virtual environment as follows:
 
 ```bash
 virtualenv -p python3 venv
