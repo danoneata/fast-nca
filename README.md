@@ -67,7 +67,7 @@ Iain Murray for supervision and writing a first version of this code.
 - [x] Add argument parsing for example script
 - [x] Add some visualizations
 - [x] Add PCA to the list of models
-- [ ] Add concentric circles and noise to the list of datasets
+- [x] Add concentric circles and noise to the list of datasets
 - [ ] Do not compute gradients when only the cost function is required
 - [ ] Add example on MNIST
 - [ ] Add tests

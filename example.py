@@ -1,6 +1,8 @@
 import argparse
 import pdb
 
+from functools import partial
+
 from matplotlib import pyplot as plt
 
 import numpy as np
@@ -11,7 +13,6 @@ from sklearn.base import (
 )
 
 from sklearn.datasets import (
-    make_circles,
     load_digits,
     load_iris,
     load_wine,
@@ -26,6 +27,12 @@ from sklearn.model_selection import (
 )
 
 from sklearn.neighbors import KNeighborsClassifier
+
+from sklearn.utils import (
+    Bunch,
+    check_random_state,
+    shuffle as util_shuffle,
+)
 
 from nca import NCA
 
@@ -43,9 +50,41 @@ class Euclidean(BaseEstimator, TransformerMixin):
         return X
 
 
+def make_circles(
+        n_samples=500, n_classes=5, shuffle=True, noise=None,
+        random_state=None, factor_step=0.2):
+
+    M = n_samples // n_classes
+    generator = check_random_state(random_state)
+    linspace = np.linspace(0, 2 * np.pi, M + 1)[:-1]
+
+    def _get_X(i):
+        factor = 1 + i * factor_step
+        circ_x = np.cos(linspace) * factor
+        circ_y = np.sin(linspace) * factor
+        return np.vstack((circ_x, circ_y, np.ones(M))).T
+
+    def _get_y(i):
+        return i * np.ones(M, dtype=np.intp)
+
+    X = np.vstack(_get_X(i) for i in range(n_classes))
+    y = np.hstack(_get_y(i) for i in range(n_classes))
+
+    if shuffle:
+        X, y = util_shuffle(X, y, random_state=generator)
+
+    if noise is not None:
+        eps = generator.normal(scale=noise, size=X.shape)
+        eps[:, 2] *= 10 * n_classes  # Extra noise on the third dimension
+        X += eps
+
+    return Bunch(data=X, target=y)
+
+
 DATA_LOADERS = {
     'wine': load_wine,
     'iris': load_iris,
+    'circles': partial(make_circles, n_samples=5000, noise=0.05, factor_step=0.5),
 }
 
 
