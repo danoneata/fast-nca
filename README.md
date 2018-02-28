@@ -68,11 +68,12 @@ Special thanks to [Iain Murray](http://homepages.inf.ed.ac.uk/imurray2/) for wri
 - [x] Add some visualizations
 - [x] Add PCA to the list of models
 - [x] Add concentric circles and noise to the list of datasets
+- [ ] Create separate modules, for example: data, models
+- [ ] Package the code
 - [ ] Do not compute gradients when only the cost function is required
 - [ ] Add example on MNIST
 - [ ] Add tests
 - [ ] Add gradient check tests
-- [ ] Package the code
 - [ ] Compute timings
 - [ ] Big O notation for memory and computation
 - [ ] Write documentation
